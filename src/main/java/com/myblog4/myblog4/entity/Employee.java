@@ -7,15 +7,16 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name="posts")
+@Table(name="employees")
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Post {
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String tittle;
-    private String description;
-    private String contenent;
+    private String name;
+    private String designation;
+    private String studies;
+    private String experience;
 }
