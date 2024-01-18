@@ -5,6 +5,9 @@ import com.myblog4.myblog4.exception.ResourceNotFoundException;
 import com.myblog4.myblog4.payload.EmployeeDto;
 import com.myblog4.myblog4.repository.EmployeeRepository;
 import com.myblog4.myblog4.service.EmployeeService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,8 +40,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDto> getALlEmployee() {
-        List<Employee> employees = employeeRepository.findAll();
+    public List<EmployeeDto> getALlEmployee(int pageNo, int pageSize) {
+       Pageable pageable= PageRequest.of(pageNo,pageSize);
+        Page<Employee> pageEmployees = employeeRepository.findAll(pageable);
+        List<Employee> employees = pageEmployees.getContent();
         List<EmployeeDto> dtos = employees.stream().map(emp -> mapToDto(emp)).collect(Collectors.toList());
         return dtos;
     }
@@ -58,7 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setId(postDto.getId());
         employee.setName(postDto.getName());
         employee.setStudies(postDto.getStudies());
-        employee.setExperience(postDto.getExperience());
+        employee.setDesignation(postDto.getDesignation());
         employee.setExperience(postDto.getExperience());
         return employee;
     }

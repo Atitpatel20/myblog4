@@ -27,9 +27,13 @@ public class EmployeeController {
         EmployeeDto dto = employeeService.getEmployeeById(id);
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
+    // http://localhost:8080/api/employees?pageNo=0&pageSize=0
     @GetMapping
-    public List<EmployeeDto> getALlEmployee(){
-        List<EmployeeDto> employeeDtos=employeeService.getALlEmployee();
+    public List<EmployeeDto> getALlEmployee(
+            @RequestParam(name="pageNo",required = false,defaultValue = "0")int pageNo,
+            @RequestParam(name="pageSize",required = false,defaultValue = "0")int pageSize
+    ){
+        List<EmployeeDto> employeeDtos=employeeService.getALlEmployee(pageNo,pageSize);
         return employeeDtos;
     }
 
