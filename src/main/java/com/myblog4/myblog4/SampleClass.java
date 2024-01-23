@@ -1,10 +1,10 @@
 package com.myblog4.myblog4;
 
-public class SimpleClass {
+public class SampleClass {
 
     public static int test1() {
-        SimpleClass simpleClass= new SimpleClass();
-        int otp = SimpleClass.returnOtp();
+        SampleClass simpleClass= new SampleClass();
+        int otp = SampleClass.returnOtp();
         return otp;
     }
 

@@ -15,7 +15,7 @@ public class DebugClass {
         System.out.println(val);
     }
     private int test() {
-        int result = SimpleClass.test1();
+        int result = SampleClass.test1();
         return result;
     }
 }

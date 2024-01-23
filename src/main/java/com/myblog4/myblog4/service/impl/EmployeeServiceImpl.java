@@ -8,6 +8,7 @@ import com.myblog4.myblog4.service.EmployeeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,8 +41,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDto> getALlEmployee(int pageNo, int pageSize) {
-       Pageable pageable= PageRequest.of(pageNo,pageSize);
+    public List<EmployeeDto> getALlEmployee(int pageNo, int pageSize, String sortBy, String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable= PageRequest.of(pageNo,pageSize, sort);
         Page<Employee> pageEmployees = employeeRepository.findAll(pageable);
         List<Employee> employees = pageEmployees.getContent();
         List<EmployeeDto> dtos = employees.stream().map(emp -> mapToDto(emp)).collect(Collectors.toList());
