@@ -5,12 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name="employees")
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +20,7 @@ public class Employee {
     private String designation;
     private String studies;
     private String experience;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Project> projects;
 }
