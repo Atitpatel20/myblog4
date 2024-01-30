@@ -29,10 +29,33 @@ public class ProjectServiceImpl implements ProjectService {
         project.setEmail(projectDto.getEmail());
         project.setEmployee(employee);
         Project saveProjects = projectRepositoty.save(project);
+
         ProjectDto dto= new ProjectDto();
         dto.setId(saveProjects.getId());
         dto.setProjectName(saveProjects.getProjectName());
         dto.setEmail(saveProjects.getEmail());
+        return dto;
+    }
+
+    @Override
+    public void deleteProjectById(long id) {
+        projectRepositoty.deleteById(id);
+    }
+
+    @Override
+    public ProjectDto updateProject(long id, ProjectDto projectDto) {
+        Project project = projectRepositoty.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Project not found with id:" + id)
+        );
+        project.setId(projectDto.getId());
+        project.setProjectName(projectDto.getProjectName());
+        project.setEmail(projectDto.getEmail());
+        Project update = projectRepositoty.save(project);
+
+        ProjectDto dto= new ProjectDto();
+        dto.setId(update.getId());
+        dto.setProjectName(update.getProjectName());
+        dto.setEmail(update.getEmail());
         return dto;
     }
 }

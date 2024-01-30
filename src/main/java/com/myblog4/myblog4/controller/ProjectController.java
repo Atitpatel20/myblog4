@@ -24,4 +24,16 @@ public class ProjectController {
         ProjectDto projects = projectService.createProjects(projectDto, employeeId);
         return new ResponseEntity<>(projects, HttpStatus.CREATED);
     }
+    // http://locahost:8080/api/projects/2
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String>deleteProjectById(@PathVariable long id){
+        projectService.deleteProjectById(id);
+        return new ResponseEntity<>("Record is deleted",HttpStatus.OK);
+    }
+    // http://localhost:8080/api/projects/1
+    @PutMapping("/{id}")
+    public ResponseEntity<ProjectDto>updateProject(@PathVariable long id,@RequestBody ProjectDto projectDto){
+        ProjectDto dto=projectService.updateProject(id,projectDto);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
+    }
 }

@@ -7,4 +7,7 @@ public interface ProjectService {
     ProjectDto createProjects(
              ProjectDto projectDto,long employeeId);
 
+    void deleteProjectById(long id);
+
+    ProjectDto updateProject(long id, ProjectDto projectDto);
 }

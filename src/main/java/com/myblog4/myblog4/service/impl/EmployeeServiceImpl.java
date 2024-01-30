@@ -5,6 +5,7 @@ import com.myblog4.myblog4.exception.ResourceNotFoundException;
 import com.myblog4.myblog4.payload.EmployeeDto;
 import com.myblog4.myblog4.repository.EmployeeRepository;
 import com.myblog4.myblog4.service.EmployeeService;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,8 +18,10 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
+    private ModelMapper modelMapper;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository,ModelMapper modelMapper) {
+        this.modelMapper=modelMapper;
         this.employeeRepository = employeeRepository;
     }
 
@@ -51,22 +54,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     EmployeeDto mapToDto(Employee employee) {
-        EmployeeDto dto = new EmployeeDto();
-        dto.setId(employee.getId());
-        dto.setName(employee.getName());
-        dto.setStudies(employee.getStudies());
-        dto.setDesignation(employee.getDesignation());
-        dto.setExperience(employee.getExperience());
+        EmployeeDto dto = modelMapper.map(employee, EmployeeDto.class);
+//        EmployeeDto dto = new EmployeeDto();
+//        dto.setId(employee.getId());
+//        dto.setName(employee.getName());
+//        dto.setStudies(employee.getStudies());
+//        dto.setDesignation(employee.getDesignation());
+//        dto.setExperience(employee.getExperience());
         return dto;
     }
 
     Employee mapToEntity(EmployeeDto postDto) {
-        Employee employee = new Employee();
-        employee.setId(postDto.getId());
-        employee.setName(postDto.getName());
-        employee.setStudies(postDto.getStudies());
-        employee.setDesignation(postDto.getDesignation());
-        employee.setExperience(postDto.getExperience());
+        Employee employee = modelMapper.map(postDto, Employee.class);
+//        Employee employee = new Employee();
+//        employee.setId(postDto.getId());
+//        employee.setName(postDto.getName());
+//        employee.setStudies(postDto.getStudies());
+//        employee.setDesignation(postDto.getDesignation());
+//        employee.setExperience(postDto.getExperience());
         return employee;
     }
 }
