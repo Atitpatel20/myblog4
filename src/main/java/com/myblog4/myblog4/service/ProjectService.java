@@ -1,7 +1,6 @@
 package com.myblog4.myblog4.service;
 
 import com.myblog4.myblog4.payload.ProjectDto;
-import org.springframework.web.bind.annotation.RequestBody;
 
 public interface ProjectService {
     ProjectDto createProjects(
@@ -9,5 +8,5 @@ public interface ProjectService {
 
     void deleteProjectById(long id);
 
-    ProjectDto updateProject(long id, ProjectDto projectDto);
+    ProjectDto updateProject(long id, ProjectDto projectDto, long employeeId);
 }

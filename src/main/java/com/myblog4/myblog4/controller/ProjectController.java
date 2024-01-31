@@ -30,10 +30,10 @@ public class ProjectController {
         projectService.deleteProjectById(id);
         return new ResponseEntity<>("Record is deleted",HttpStatus.OK);
     }
-    // http://localhost:8080/api/projects/1
-    @PutMapping("/{id}")
-    public ResponseEntity<ProjectDto>updateProject(@PathVariable long id,@RequestBody ProjectDto projectDto){
-        ProjectDto dto=projectService.updateProject(id,projectDto);
+    // http://localhost:8080/api/projects/1/employee/2
+    @PutMapping("/{id}/employee/{employeeId}")
+    public ResponseEntity<ProjectDto>updateProject(@PathVariable long id,@RequestBody ProjectDto projectDto,@PathVariable long employeeId){
+        ProjectDto dto=projectService.updateProject(id,projectDto,employeeId);
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
 }
