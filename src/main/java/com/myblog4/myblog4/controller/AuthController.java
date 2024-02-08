@@ -1,7 +1,9 @@
 package com.myblog4.myblog4.controller;
 
+import com.myblog4.myblog4.entity.Role;
 import com.myblog4.myblog4.entity.User;
 import com.myblog4.myblog4.payload.SignUpDto;
+import com.myblog4.myblog4.repository.RoleRepository;
 import com.myblog4.myblog4.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -19,6 +24,8 @@ public class AuthController {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<?> createRegistraion(@RequestBody SignUpDto signUpDto) {
@@ -34,9 +41,11 @@ public class AuthController {
         user.setUsername(signUpDto.getUsername());
         user.setEmail(signUpDto.getEmail());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
-
+        Role roles = roleRepository.findByName(signUpDto.getRoleType()).get();
+        Set<Role> convertToSet = new HashSet<>();
+        convertToSet.add(roles);
+        user.setRoles(convertToSet);
         userRepository.save(user);
-
         return new ResponseEntity<>("Registration Done Succesfully", HttpStatus.CREATED);
     }
 }
